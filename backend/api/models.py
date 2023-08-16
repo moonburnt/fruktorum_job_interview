@@ -18,11 +18,11 @@ class BookmarkCollectionModel(models.Model):
 
 class BookmarkModel(models.Model):
     # Since new types can be added in future, we could implement these as a model
-    WEBSITE = 1
-    BOOK = 2
-    ARTICLE = 3
-    MUSIC = 4
-    VIDEO = 5
+    WEBSITE = "website"
+    BOOK = "book"
+    ARTICLE = "article"
+    MUSIC = "music"
+    VIDEO = "video"
 
     WEBSITE_CHOICES = (
         (WEBSITE, "Website"),
@@ -35,16 +35,15 @@ class BookmarkModel(models.Model):
     title = models.TextField()
     description = models.TextField()
     url = models.URLField(unique=True)
-    url_type = models.PositiveSmallIntegerField(
+    url_type = models.CharField(
         choices=WEBSITE_CHOICES,
         default=WEBSITE,
+        max_length=10,
     )
 
     # Its unclear if we should cache image locally or use remote image url
-    # For now, lets assume it expects us to cache things.
-    # TODO: give image unique name, like UUID4+default name.
-    # Probably via create/on change signal
-    image = models.ImageField()
+    # Assuming it should be a link, for sake of simplicity and speed
+    image = models.URLField()
 
     collections = models.ManyToManyField(
         to=BookmarkCollectionModel,

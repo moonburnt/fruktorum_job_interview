@@ -39,18 +39,18 @@ class AddBookmarkSerializer(serializers.ModelSerializer):
 
 
 class AddToCollectionBookmarkSerializer(serializers.Serializer):
-    bookmark_id = serializers.PrimaryKeyRelatedField(queryset = models.BookmarkModel.objects.all())
+    bookmark_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.BookmarkModel.objects.all()
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fields["bookmark_id"].queryset = self.context["view"].get_queryset()
 
-
     # def validate_bookmark_id(self, data):
     #     if self.context["view"].get_queryset().filter(bookmark_id).first() is not None:
     #         raise serializers.ValidationError()
-
 
     # def validate(self, data):
     #     validated_data = super().validate(data)
@@ -79,12 +79,12 @@ class AddToCollectionBookmarkSerializer(serializers.Serializer):
 
     # def validate_book
 
+
 # class AddToCollectionBookmarkSerializer(serializers.Serializer):
 #     bookmark_id = serializers.IntegerField()
 
 #     def validate(self):
 #         bookmark_id in
-
 
 
 class BookmarkSerializer(serializers.ModelSerializer):

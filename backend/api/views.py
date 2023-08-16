@@ -67,9 +67,13 @@ class BookmarkInCollectionViewSet(CreateRetrieveListDestroyViewSet):
 
     def get_queryset(self):
         if self.action == "create":
-            return models.BookmarkModel.objects.filter(~Q(collections=self.kwargs['collection_pk']))
+            return models.BookmarkModel.objects.filter(
+                ~Q(collections=self.kwargs["collection_pk"])
+            )
         else:
-            return models.BookmarkModel.objects.filter(collections=self.kwargs['collection_pk'])
+            return models.BookmarkModel.objects.filter(
+                collections=self.kwargs["collection_pk"]
+            )
 
     def get_serializer_class(self):
         if self.action == "create":
@@ -90,9 +94,7 @@ class BookmarkInCollectionViewSet(CreateRetrieveListDestroyViewSet):
         return Response(serializer.data, headers=headers)
 
     def perform_create(self, obj):
-        obj.collections.add(self.kwargs['collection_pk'])
+        obj.collections.add(self.kwargs["collection_pk"])
 
     def perform_destroy(self, instance):
-        instance.collections.remove(self.kwargs['collection_pk'])
-
-
+        instance.collections.remove(self.kwargs["collection_pk"])
