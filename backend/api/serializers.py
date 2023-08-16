@@ -52,7 +52,23 @@ class AddToCollectionBookmarkSerializer(serializers.ModelSerializer):
         )
 
 
-class CollectionSerializer(serializers.ModelSerializer):
+class BookmarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.BookmarkModel
+        fields = "__all__"
+        read_only_fields = (
+            "title",
+            "description",
+            "url",
+            "url_type",
+            "image",
+            "created",
+            "updated",
+            "collections",
+        )
+
+
+class BookmarkCollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BookmarkCollectionModel
         fields = "__all__"

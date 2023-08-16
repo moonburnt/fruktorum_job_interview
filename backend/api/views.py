@@ -29,3 +29,23 @@ class RegisterUserView(CreateOnlyModelViewSet):
         response = super().create(request, *args, **kwargs)
 
         return HttpResponseRedirect(redirect_to="/auth/login/")
+
+
+class BookmarkViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.BookmarkSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = models.BookmarkModel.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return serializers.AddBookmarkSerializer
+        elif self.action in ("update", "partial_update",):
+            return serializers.AddToCollectionBookmarkSerializer
+        else:
+            return super().get_serializer_class()
+
+
+class BookmarkCollectionViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.BookmarkCollectionSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = models.BookmarkCollectionModel.objects.all()
