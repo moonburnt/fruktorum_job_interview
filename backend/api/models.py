@@ -2,21 +2,28 @@ from django.db import models
 from django.utils import timezone
 
 
-class BookmarkCollectionModel(models.Model):
-    # Because there was no requirement to restrict collection deletion to current
-    # user - hold no references to any user
-    title = models.TextField()
-    description = models.TextField()
+class CreateUpdateMixin(models.Model):
+    """Mixin that implements auto-fields that track model creation and update time"""
 
     created = models.DateTimeField(auto_now=True, editable=False)
     updated = models.DateTimeField(auto_now=True, editable=False)
+
+    class Meta:
+        abstract = True
 
     def save(self, *args, **kwargs):
         self.updated = timezone.now()
         super().save(*args, **kwargs)
 
 
-class BookmarkModel(models.Model):
+class BookmarkCollectionModel(CreateUpdateMixin, models.Model):
+    # Because there was no requirement to restrict collection deletion to current
+    # user - hold no references to any user
+    title = models.TextField()
+    description = models.TextField()
+
+
+class BookmarkModel(CreateUpdateMixin, models.Model):
     # Since new types can be added in future, we could implement these as a model
     WEBSITE = "website"
     BOOK = "book"
@@ -49,10 +56,3 @@ class BookmarkModel(models.Model):
         to=BookmarkCollectionModel,
         related_name="bookmarks",
     )
-
-    created = models.DateTimeField(auto_now=True, editable=False)
-    updated = models.DateTimeField(auto_now=True, editable=False)
-
-    def save(self, *args, **kwargs):
-        self.updated = timezone.now()
-        super().save(*args, **kwargs)
