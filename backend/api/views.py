@@ -42,7 +42,7 @@ class RegisterUserView(CreateOnlyModelViewSet):
         return HttpResponseRedirect(redirect_to="/auth/login/")
 
 
-class BookmarkViewSet(viewsets.ModelViewSet):
+class BookmarkViewSet(CreateRetrieveListDestroyViewSet):
     serializer_class = serializers.BookmarkSerializer
     permission_classes = [IsAuthenticated]
     queryset = models.BookmarkModel.objects.all()

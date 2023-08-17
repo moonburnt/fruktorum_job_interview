@@ -48,44 +48,6 @@ class AddToCollectionBookmarkSerializer(serializers.Serializer):
 
         self.fields["bookmark_id"].queryset = self.context["view"].get_queryset()
 
-    # def validate_bookmark_id(self, data):
-    #     if self.context["view"].get_queryset().filter(bookmark_id).first() is not None:
-    #         raise serializers.ValidationError()
-
-    # def validate(self, data):
-    #     validated_data = super().validate(data)
-    #     if not self.context["view"].get_queryset().filter(validated_data["bookmark_id"]).first():
-    #         raise serializers.ValidationError(
-    #             f"bookmark with id {validated_data['bookmark_id']} "
-    #             "already exists in this collection"
-    #         )
-
-    #     return validated_data
-
-    # class Meta:
-    #     model = models.BookmarkModel
-    #     fields = (
-    #         "bookmark_id",
-    #         "pk",
-    #         "title",
-    #         "url",
-    #         "collections",
-    #     )
-    #     read_only_fields = (
-    #         "title",
-    #         "url",
-    #         "collections",
-    #     )
-
-    # def validate_book
-
-
-# class AddToCollectionBookmarkSerializer(serializers.Serializer):
-#     bookmark_id = serializers.IntegerField()
-
-#     def validate(self):
-#         bookmark_id in
-
 
 class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:
