@@ -3,3 +3,4 @@ djangorestframework==3.14.0
 requests==2.31.0
 beautifulsoup4==4.12.2
 drf-nested-routers==0.93.4
+psycopg2==2.9.7
